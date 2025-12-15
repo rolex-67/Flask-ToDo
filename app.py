@@ -18,7 +18,10 @@ class Todo(db.Model):
     
     def __repr__(self)->str: #->str means the function returns a string
         return f"{self.Sno} - {self.title}  "
-
+    
+# Add this block:
+with app.app_context():
+    db.create_all()
 
 
 @app.route("/",methods=['GET','POST'])
