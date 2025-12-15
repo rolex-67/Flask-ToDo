@@ -5,8 +5,10 @@ app = Flask(__name__)
 
 
 import os
-# Use the Vercel temporary directory (or a standard writable path)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.getcwd(), 'todo.db')
+# --- CRUCIAL FIX FOR VERCEL DEPLOYMENT ---
+# Explicitly use the /tmp directory, which is writable in serverless environments.
+DB_PATH = os.path.join('/tmp', 'todo.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + DB_PATH
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db=SQLAlchemy(app)
 
